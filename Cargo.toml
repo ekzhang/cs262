@@ -1,0 +1,9 @@
+[package]
+name = "cs262"
+version = "0.1.0"
+edition = "2021"
+authors = ["Eric Zhang <ekzhang1@gmail.com>"]
+license = "MIT"
+publish = false
+
+[dependencies]
