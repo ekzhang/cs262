@@ -2,19 +2,29 @@
 
 #![forbid(unsafe_code)]
 
+use clap::Parser;
+
 pub mod wire;
 
-pub fn add(left: usize, right: usize) -> usize {
-    left + right
+/// Command-line interface for CS 262 solutions.
+#[derive(Parser, Debug)]
+pub enum Cli {
+    #[clap(subcommand)]
+    Wire(Wire),
 }
 
-#[cfg(test)]
-mod tests {
-    use super::*;
+#[derive(Parser, Debug)]
+pub enum Wire {
+    Client,
+    Server,
+}
 
-    #[test]
-    fn it_works() {
-        let result = add(2, 2);
-        assert_eq!(result, 4);
+impl Cli {
+    pub fn run(&self) -> anyhow::Result<()> {
+        match self {
+            Cli::Wire(Wire::Client) => wire::run_client()?,
+            Cli::Wire(Wire::Server) => wire::run_server()?,
+        }
+        Ok(())
     }
 }

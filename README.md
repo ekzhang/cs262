@@ -4,7 +4,7 @@ These are my assignment solutions to [CS 262: Introduction to Distributed Comput
 
 I'm not taking this class, so this is mostly just for fun. I'm doing this in Rust.
 
-I may skip parts of assignments that I don't find interesting. Generally I don't want to spend more than 1-2 hours per assignment, so you shouldn't expect production-quality code.
+I may skip parts of assignments that I don't find interesting. Generally I don't want to spend more than 1-2 hours per assignment, so you shouldn't expect production-quality code. Also I might use idiomatic libraries for repetitive tasks, even if it doesn't entirely match pedagogical intent.
 
 ## Assignment 1: Wire Protocols
 
