@@ -2,18 +2,9 @@
 
 These are my solutions to [CS 262: Introduction to Distributed Computing](https://canvas.harvard.edu/courses/116261) assignments at Harvard, taught by [Jim Waldo](http://www.eecs.harvard.edu/~waldo/) in Spring 2023.
 
-I'm not taking this class, so this is just for fun. I'm writing my solutions in Rust.
+I'm not taking this class, so this is just for fun. I'm writing my solutions in Rust; run with `cargo run`.
 
 I may skip parts of assignments that involve a lot of "writeup" work. Generally I don't want to spend more than 1-2 hours per assignment, so the code might be written quite quickly.
-
-```shell
-# Assignment 1
-cargo run wire server
-cargo run wire client
-
-# Assignment 2
-cargo run lamport
-```
 
 ## Assignment 1: Wire Protocols
 
