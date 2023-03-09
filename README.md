@@ -8,7 +8,9 @@ I may skip parts of assignments that involve a lot of "writeup" work. Generally 
 
 ## Assignment 1: Wire Protocols
 
-This is located in the `wire` module.
+![](screenshots/wire.png)
+
+This is located in the [`wire`](src/wire.rs) module.
 
 > For the first design exercise, you will develop a simple chat application. This will be a client/server application, with the following functions:
 >
@@ -24,7 +26,9 @@ This is located in the `wire` module.
 
 ## Assignment 2: Scale Models and Logical Clocks
 
-This is located in the `lamport` module.
+![](screenshots/lamport.png)
+
+This is located in the [`lamport`](src/lamport.rs) module.
 
 > In this assignment, you and your partner will build a model of a small, asynchronous distributed system. It will run on a single machine, but you will model multiple machines running at different speeds. And you will build a logical clock for each of the model machines.
 >
