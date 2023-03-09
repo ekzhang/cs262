@@ -46,25 +46,16 @@ fn machine_main(rng: Rng, tr: Transceiver) {
             clock = clock.max(msg.logical_time) + 1;
             info!(clock, queued = tr.rx.len(), ?msg, "received message");
         } else {
+            clock += 1;
             match rng.u32(1..=10) {
-                1 => {
-                    clock += 1;
-                    send(clock, 0);
-                }
-                2 => {
-                    clock += 1;
-                    send(clock, 1);
-                }
+                1 => send(clock, 0),
+                2 => send(clock, 1),
                 3 => {
-                    clock += 1;
                     for i in 0..tr.txs.len() {
                         send(clock, i);
                     }
                 }
-                _ => {
-                    clock += 1;
-                    info!(clock, "internal event");
-                }
+                _ => info!(clock, "internal event"),
             }
         }
     }
