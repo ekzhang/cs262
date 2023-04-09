@@ -1,5 +1,7 @@
 # cs262
 
+**Status: Complete**
+
 These are my solutions to [CS 262: Introduction to Distributed Computing](https://canvas.harvard.edu/courses/116261) assignments at Harvard, taught by [Jim Waldo](http://www.eecs.harvard.edu/~waldo/) in Spring 2023.
 
 I'm not taking this class, so this is just for fun. I'm writing my solutions in Rust; run with `cargo run`.
@@ -10,7 +12,7 @@ I may skip parts of assignments that involve a lot of "writeup" work. Generally 
 
 ![](screenshots/wire.png)
 
-This is located in the [`wire`](src/wire.rs) module.
+This is located in the [`wire`](src/wire.rs) module. It just contains a simple but compact wire protocol and uses it to send chat messages over TCP.
 
 > For the first design exercise, you will develop a simple chat application. This will be a client/server application, with the following functions:
 >
@@ -28,7 +30,7 @@ This is located in the [`wire`](src/wire.rs) module.
 
 ![](screenshots/lamport.png)
 
-This is located in the [`lamport`](src/lamport.rs) module.
+This is located in the [`lamport`](src/lamport.rs) module. The simulation uses threads communicating over shared MPSC channels.
 
 > In this assignment, you and your partner will build a model of a small, asynchronous distributed system. It will run on a single machine, but you will model multiple machines running at different speeds. And you will build a logical clock for each of the model machines.
 >
@@ -48,6 +50,18 @@ This is located in the [`lamport`](src/lamport.rs) module.
 > - if the value is other than 1-3, treat the cycle as an internal event; update the local logical clock, and log the internal event, the system time, and the logical clock value.
 >
 > While working on this, keep a lab notebook in which you note the design decisions you have made. Then, run the scale model at least 5 times for at least one minute each time. Examine the logs, and discuss (in the lab book) the size of the jumps in the values for the logical clocks, drift in the values of the local logical clocks in the different machines (you can get a god’s eye view because of the system time), and the impact different timings on such things as gaps in the logical clock values and length of the message queue. Observations and reflections about the model and the results of running the model are more than welcome.
+
+## Assignment 3: Replication
+
+![](screenshots/wire2.png)
+
+This is located in the [`wire2`](src/wire2.rs) module. It extends the chat server with multi-process SQLite for a persistent message store, and gains fault tolerance simply by binding multiple servers to the same local port with `SO_REUSEADDR`.
+
+> Take one of the two implementations you created for the first design exercise (the chat application) and re-design it so that the system is both persistent (it can be stopped and re-started without losing messages that were sent during the time it was running) and 2-fault tolerant in the face of crash/failstop failures. In other words, replicate the back end of the implementation, and make the message store persistent.
+>
+> The replication can be done in multiple processes on the same machine, but you need to show that the replication also works over multiple machines (at least two). That should be part of the demo.
+>
+> As usual, you will demo the system on Demo Day III (April 10). Part of the assignment is figuring out how you will demo both the new features. As in the past, keep an engineering notebook that details the design and implementation decisions that you make while implementing the system.
 
 ## License
 

@@ -17,6 +17,7 @@ use std::{
     net::{TcpListener, TcpStream},
     sync::Arc,
     thread,
+    time::Duration,
 };
 
 use colored::Colorize;
@@ -142,7 +143,7 @@ impl Message {
     }
 }
 
-pub fn run_client() -> io::Result<()> {
+fn run_client_once() -> io::Result<()> {
     let mut stream = TcpStream::connect(("127.0.0.1", WIRE_PORT))?;
 
     // This was also mostly written by Copilot.
@@ -202,6 +203,15 @@ pub fn run_client() -> io::Result<()> {
     Ok(())
 }
 
+pub fn run_client() {
+    loop {
+        if let Err(err) = run_client_once() {
+            eprintln!("{}", format!("I/O error: {err}").magenta());
+            thread::sleep(Duration::from_millis(250));
+        }
+    }
+}
+
 pub fn run_server() -> io::Result<()> {
     let listener = TcpListener::bind(("127.0.0.1", WIRE_PORT))?;
 
@@ -223,7 +233,7 @@ pub fn run_server() -> io::Result<()> {
             // Most of this part was written by Copilot.
             let resp = match Message::decode(&mut stream)? {
                 Message::Create(name) => {
-                    eprintln!("create account {}", name);
+                    eprintln!("create account {name}");
                     let mut accounts = accounts.lock();
                     if accounts.contains_key(&name) {
                         Err("account already exists".into())
@@ -250,7 +260,7 @@ pub fn run_server() -> io::Result<()> {
                     Ok(results)
                 }
                 Message::Send(name, text) => {
-                    eprintln!("send message to {}", name);
+                    eprintln!("send message to {name}");
                     let mut accounts = accounts.lock();
                     if let Some(queue) = accounts.get_mut(&name) {
                         queue.push(text.clone());
@@ -260,7 +270,7 @@ pub fn run_server() -> io::Result<()> {
                     }
                 }
                 Message::Deliver(name) => {
-                    eprintln!("deliver messages to {}", name);
+                    eprintln!("deliver messages to {name}");
                     let mut accounts = accounts.lock();
                     if let Some(queue) = accounts.get_mut(&name) {
                         let mut results = String::new();
@@ -274,7 +284,7 @@ pub fn run_server() -> io::Result<()> {
                     }
                 }
                 Message::Delete(name) => {
-                    eprintln!("delete account {}", name);
+                    eprintln!("delete account {name}");
                     let mut accounts = accounts.lock();
                     match accounts.entry(name) {
                         Entry::Occupied(entry) => {
