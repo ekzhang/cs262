@@ -57,6 +57,8 @@ This is located in the [`lamport`](src/lamport.rs) module. The simulation uses t
 
 This is located in the [`wire2`](src/wire2.rs) module. It extends the chat server with multi-process SQLite for a persistent message store, and gains fault tolerance simply by binding multiple servers to the same local port with `SO_REUSEADDR`.
 
+If desired to run the server on multiple nodes, it would need some kind of consensus. You could [abuse NFS for this](https://www.sqlite.org/useovernet.html), or pick up an over-the-counter solution for SQLite like [rqlite](https://github.com/rqlite/rqlite). A more boring choice would be to use a replicated client-server database like PostgreSQL or Redis. It's a bit unclear whether this falls within the intended scope of the assignment, but you could also implement a distributed K/V store from scratch, using Raft for instance (like a very simple [TiKV](https://tikv.org/)).
+
 > Take one of the two implementations you created for the first design exercise (the chat application) and re-design it so that the system is both persistent (it can be stopped and re-started without losing messages that were sent during the time it was running) and 2-fault tolerant in the face of crash/failstop failures. In other words, replicate the back end of the implementation, and make the message store persistent.
 >
 > The replication can be done in multiple processes on the same machine, but you need to show that the replication also works over multiple machines (at least two). That should be part of the demo.
